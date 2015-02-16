@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     
     // ---- Sezione 2
     // Inizializzazione del vettore delle frequenze
-    for(i=0; i<4; i++)
+    for(i=0; i<VALORE_MASSIMO+1; i++)
         frequenze[i] = 0;
     
     // Inserimento dei valori
@@ -51,25 +51,27 @@ int main(int argc, char** argv) {
  * NOTA: considera 0^0=1
  */
 float potenza(int base, int esponente) {
-    float ris=1;
-    int c=0;
-    if(esponente==0)
-        ris=1;
-    else
-    {
-        if(esponente>0){
-            for(c=0;c<esponente;c++){
-            ris= ris*base;
-            }
-        }
-        else
-        {
-            esponente=esponente*(-1);
-            ris=(float)esponente/base;
-        }
+    float r = 1;
+    int esponenteNegativo = 0;
+    if(esponente < 0) {
+        esponenteNegativo = 1;
+        esponente *= -1;
     }
-    
-       return  ris;
+    for(; esponente > 0; esponente--) {
+        r *= base;
+    }
+    if(esponenteNegativo) {
+        r = 1/r;
+        // Più completo
+//        if(r) {
+//            r = 1/r;
+//        }
+//        else {
+//            fprintf(stderr, "Divisione per 0\n");
+//            exit(-1);
+//        }
+    }
+    return r;
 }
 
 /*
@@ -82,6 +84,6 @@ float potenza(int base, int esponente) {
  * dopo la chiamata.
  */
 void aggiornaFrequenza(int frequenze[], int valore) {
-    frequenze[valore]=frequenze[valore]+1;
+    frequenze[valore]++;
     return;
 }
